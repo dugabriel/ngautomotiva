@@ -1,0 +1,46 @@
+<%- include ./layouts/header.ejs %>
+
+<body bgcolor="#E6E6FA">
+    <div class="sufee-login d-flex align-content-center flex-wrap">
+        <div class="container">
+            <div class="login-content">
+                <div class="login-logo">
+                    <a href="/">
+                        <img class="align-content" src="../images/logo.png" alt="">
+                    </a>
+                </div>
+                <div class="login-form">
+
+                    <% if (messages.error) { %>
+                        <p style="color:red"><%- messages.error %></p>
+                    <% } %>
+                    
+                    <% if (messages.success) { %>
+                        <p style="color:green"><%- messages.success %></p>
+                    <% } %>
+
+                    <form action="/auth" method="post" name="login">
+                        <div class="form-group">
+                            <label>Login</label>
+                            <input type="text" name="login" id="login" class="form-control" placeholder="user">
+                        </div>
+                        <div class="form-group">
+                            <label>Senha</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="password">
+                        </div>
+                        <div class="checkbox">
+                            <label class="pull-right">
+                                <a href="#">Esqueceu sua senha?</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Entrar</button>
+                        <div class="register-link m-t-15 text-center">
+                            <p>Não possui uma conta? <a href="#"> Inscreva-se</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<%- include ./layouts/footer.ejs %>
