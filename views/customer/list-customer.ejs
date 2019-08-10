@@ -1,0 +1,122 @@
+<%- include ../layouts/header.ejs %>
+
+<body>
+    <%- include ../layouts/left-panel.ejs %>
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <%- include ../layouts/header-panel.ejs %>
+        <!-- Content -->
+        <div class="content">
+            <!-- Animated -->
+            <div class="animated fadeIn">
+                <!--  add  -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Clientes</strong>
+                            </div>
+                            <div class="card-body">
+                                <div id="list-customer">
+                                    <div class="card-body">
+                                        <!--  MSG ERRORS -->
+                                        <% if (messages.error) { %>
+                                            <p style="color:red"><%- messages.error %></p>
+                                        <% } %>
+                                        
+                                        <% if (messages.success) { %>
+                                            <p style="color:green"><%- messages.success %></p>
+                                        <% } %>
+                                        <div class="row">    
+                                            <div class="col-12">
+                                                <div class="table-stats order-table ov-h">
+                                                    <table class="table" id="listCustomers">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>CPF/CNPJ</th>
+                                                                <th>Nome</th>
+                                                                <th>CEP</th>
+                                                                <th>Endereço</th>
+                                                                <th>Estado</th>
+                                                                <th>Cidade</th>
+                                                                <th>Bairro</th>
+                                                                <th>Telefone</th>
+                                                                <th>Celular</th>
+                                                                <th>Email</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <% if (data) { %>
+                                                            <% data.forEach(function(customer){ %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= customer.customer_registry %>
+                                                                    <input type="hidden" name="id_customer" id="id_customer" value="<%= customer.id %>"/>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="name"><%= customer.customer_name %></span>
+                                                                </td>
+                                                                <td>
+                                                                    <%= customer.customer_cep %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= customer.customer_cep %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= customer.customer_placement %>
+                                                                </td> 
+                                                                <td>
+                                                                    <%= customer.customer_state %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= customer.customer_city %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= customer.customer_telephone %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= customer.customer_cellphone %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= customer.customer_mail %>
+                                                                </td>
+                                                            </tr>
+                                                            <% }) %>
+                                                        <% } %>                     
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- .card -->
+                    </div>
+                </div>
+                <!--  /add -->
+                <div class="clearfix"></div>
+            <!-- .animated -->
+        </div>
+        <!-- /.content -->
+        <div class="clearfix"></div>
+        <!-- Footer Copyright -->
+        <%- include ../layouts/footer-copyright.ejs %>
+        <!-- /.site-footer -->
+    </div>
+    <!-- /#right-panel -->
+
+    <script src="../js/lib/data-table/datatables.min.js"></script>
+    <script src="../js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="../js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="../js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="../js/lib/data-table/jszip.min.js"></script>
+    <script src="../js/lib/data-table/vfs_fonts.js"></script>
+    <script src="../js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="../js/lib/data-table/buttons.print.min.js"></script>
+    <script src="../js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="../js/init/datatables-init.js"></script>
+
+<%- include ../layouts/footer.ejs %>

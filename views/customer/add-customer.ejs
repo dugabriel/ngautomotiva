@@ -34,7 +34,7 @@
                                                 <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="customer_registry" class="control-label mb-1">CPF/CNPJ</label>
-                                                        <input type="text" id="customer_registry" name="customer_registry" class="form-control" value="<%= customer_registry %>"/>
+                                                        <input type="text" id="customer_registry" name="customer_registry" class="form-control" value="<%= customer_registry %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
@@ -48,7 +48,7 @@
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label for="customer_cep" class="control-label mb-1">CEP</label>
-                                                        <input type="text" id="customer_cep" name="customer_cep" class="form-control" value="<%= customer_cep %>">
+                                                        <input type="text" id="customer_cep" name="customer_cep" class="form-control" value="<%= customer_cep %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                                     </div>
                                                 </div>  
                                                 <div class="col-4">
@@ -109,13 +109,13 @@
                                                 <div class="col-3">
                                                     <div class="form-group">
                                                         <label for="customer_telephone" class="control-label mb-1">Telefone</label>
-                                                        <input type="text" id="customer_telephone" name="customer_telephone" class="form-control" value="<%= customer_telephone %>">
+                                                        <input type="text" id="customer_telephone" name="customer_telephone" class="form-control" value="<%= customer_telephone %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="form-group">
                                                         <label for="customer_cellphone" class="control-label mb-1">Celular</label>
-                                                        <input type="text" id="customer_cellphone" name="customer_cellphone" class="form-control" value="<%= customer_cellphone %>">
+                                                        <input type="text" id="customer_cellphone" name="customer_cellphone" class="form-control" value="<%= customer_cellphone %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                                     </div>
                                                 </div>
                                             </div>
