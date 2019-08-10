@@ -94,7 +94,7 @@ app.use(session({
 	secret: 'ZzzZAaaAzzZwWwWfaWwqS',
 	resave: false,
 	saveUninitialized: true,
-	cookie: { maxAge: 1260000 }
+	cookie: { maxAge: 12260000 }
 }))
 
 
