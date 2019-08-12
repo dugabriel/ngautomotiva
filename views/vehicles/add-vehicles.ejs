@@ -17,51 +17,94 @@
                                 <strong class="card-title">Novo Veículo</strong>
                             </div>
                             <div class="card-body">
-                                <!-- new veihicle-->
+                                <!-- new vehicle-->
                                 <div id="add-vehicle">
                                     <div class="card-body">
-                                        <form action="#" method="post" novalidate="novalidate">
-                                            <div class="form-group">
-                                                <label for="cc-payment" class="control-label mb-1">Payment amount</label>
-                                                <input id="cc-payment" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" value="100.00">
-                                            </div>
-                                            <div class="form-group has-success">
-                                                <label for="cc-name" class="control-label mb-1">Name on card</label>
-                                                <input id="cc-name" name="cc-name" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card" autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name">
-                                                <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="cc-number" class="control-label mb-1">Card number</label>
-                                                <input id="cc-number" name="cc-number" type="tel" class="form-control cc-number identified visa" value="" data-val="true" data-val-required="Please enter the card number" data-val-cc-number="Please enter a valid card number">
-                                                <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
+
+                                        <!--  MSG ERRORS -->
+                                        <% if (messages.error) { %>
+                                            <p style="color:red"><%- messages.error %></p>
+                                        <% } %>
+                                        
+                                        <% if (messages.success) { %>
+                                            <p style="color:green"><%- messages.success %></p>
+                                        <% } %>
+                                        <form action="/vehicle/add" method="post" novalidate="novalidate">
+                                            <div class="row">    
+                                                <div class="col-3">
                                                     <div class="form-group">
-                                                        <label for="cc-exp" class="control-label mb-1">Expiration</label>
-                                                        <input id="cc-exp" name="cc-exp" type="tel" class="form-control cc-exp" value="" data-val="true" data-val-required="Please enter the card expiration" data-val-cc-exp="Please enter a valid month and year" placeholder="MM / YY">
-                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                                        <label for="license_plate" class="control-label mb-1">Placa</label>
+                                                        <input type="text" id="customer_registry" name="license_plate" class="form-control" value="<%= license_plate %>" />
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
-                                                    <label for="x_card_code" class="control-label mb-1">Security code</label>
-                                                    <div class="input-group">
-                                                        <input id="x_card_code" name="x_card_code" type="tel" class="form-control cc-cvc" value="" data-val="true" data-val-required="Please enter the security code" data-val-cc-cvc="Please enter a valid security code" autocomplete="off">
-                                                        <div class="input-group-addon">
-                                                            <span class="fa fa-question-circle fa-lg" data-toggle="popover" data-container="body" data-html="true" data-title="Security Code" data-content="<div class='text-center one-card'>The 3 digit code on back of the card..<div class='visa-mc-cvc-preview'></div></div>" data-trigger="hover"></span>
-                                                        </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="model" class="control-label mb-1">KM</label>
+                                                        <input type="text" id="mileage" name="model" class="form-control" value="<%= model %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
-                                                    <i class="fa fa-lock fa-lg"></i>&nbsp;
-                                                    <span id="payment-button-amount">Pay $100.00</span>
-                                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
-                                                </button>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="mileage" class="control-label mb-1">Marca/Modelo</label>
+                                                        <input type="text" id="mileage" name="mileage" class="form-control" value="<%= mileage %>"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="year" class="control-label mb-1">Ano</label>
+                                                        <input type="text" id="year" name="year" class="form-control" value="<%= year %>"/>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="row">
+                                                <div class="col-1">
+                                                    <div class="form-group">
+                                                        <label for="engine" class="control-label mb-1">Motorização</label>
+                                                        <input type="text" id="year" name="engine" class="form-control" value="<%= engine %>"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="fuel" class="control-label mb-1">Combustivel</label>
+                                                        <select id="fuel" name="fuel" class="form-control">
+                                                            <option value="<%= engine %>"><%= engine %></option>
+                                                            <option value="Gasolina">Gasolina</option>
+                                                            <option value="Álcool">Álcool</option>
+                                                            <option value="Álcool">Flex</option>
+                                                            <option value="Álcool">GNV</option>
+                                                            <option value="Álcool">Diesel</option>  
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="color" class="control-label mb-1">Cor</label>
+                                                        <select id="color" name="color" class="form-control">
+                                                            <option value="<%= color %>"><%= color %></option>
+                                                            <option value="Preto">Preto</option>
+                                                            <option value="Prata">Prata</option>
+                                                            <option value="Branco">Branco</option>
+                                                            <option value="Vermelho">Vermelho</option>
+                                                            <option value="Bege">Verde</option>
+                                                            <option value="Azul">Azul</option>
+                                                            <option value="Amarelo">Amarelo</option>
+                                                            <option value="Bege">Bege</option>
+                                                            <option value="Bege">Cinza</option>
+                                                            <option value="Bege">Laranja</option>
+                                                            <option value="Bege">Marrom</option>
+                                                            <option value="Fantasia">Fantasia</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>      
+                                            <div class="row justify-content-end">
+                                                <div class="col-3">
+                                                    <button type="submit" class="btn btn-success btn-lg btn-block">Cadastrar</button>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
+                              
                                 </div>
                             </div>
                         </div> <!-- .card -->

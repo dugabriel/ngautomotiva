@@ -3,7 +3,7 @@ const app = express()
 const auth = require('../controller/session')
 const newCustomerTilte = 'Novo cliente'
 const listCustomerTitle = 'Listar clientes'
-const editCustomerTitle = 'Listar clientes'
+const editCustomerTitle = 'Editando cliente'
 
 // SHOW ADD ITEMS CUSTOMER
 app.get('/add', function(req, res, next){	
@@ -95,7 +95,7 @@ app.post('/add', function(req, res, next){
 app.get('/list', function(req, res, next) {
     if (auth.authenticationMiddleware(req,res)) {
         req.getConnection(function(error, conn) {
-            conn.query('SELECT * FROM customer ORDER BY customer_name',function(err, rows, fields) {
+            conn.query('SELECT * FROM customer ORDER BY customer_name ASC',function(err, rows, fields) {
                 if (err) {
                     req.flash('error', err)
                     res.render('customer/list-customer', {
@@ -127,7 +127,7 @@ app.get('/edit/(:id)', function(req, res, next){
                 }
                 else { // if customer found
                     res.render('customer/edit-customer', {
-                        title: 'Editando Cliente',
+                        title: editCustomerTitle,
                         id: rows[0].id,
                         customer_registry: rows[0].customer_registry,
                         customer_name: rows[0].customer_name,
@@ -203,7 +203,23 @@ app.post('/edit/(:id)', function(req, res, next) {
     }
 })
 
-
+//SEARCH USER FROM NAME
+app.get('/search/(:name)', function(req, res, next){
+    if (auth.authenticationMiddleware(req,res)) {
+        req.getConnection(function(error, conn) {
+            conn.query(
+                'select id,customer_name from customer where customer_name like ?',
+                ['%'+req.params.name+'%'],
+                (err, results) => {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send(JSON.stringify(results))
+                }
+            })
+        })       
+    }
+})
 
 function renderPage(req,res,blank) {
     if (blank) req.body = '';
@@ -225,6 +241,7 @@ function renderEditPage(req,res,blank) {
     if (blank) req.body = '';
     res.render('customer/edit-customer', { 
         title: editCustomerTitle,
+        id: req.params.id,
         customer_registry: req.body.customer_registry,
         customer_name: req.body.customer_name,
         customer_cep: req.body.customer_cep,
