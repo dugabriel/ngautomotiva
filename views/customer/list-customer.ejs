@@ -36,17 +36,18 @@
                                                                 <th>CPF/CNPJ</th>
                                                                 <th>Nome</th>
                                                                 <th>CEP</th>
-                                                                <th>Endereço</th>
-                                                                <th>Estado</th>
-                                                                <th>Cidade</th>
-                                                                <th>Bairro</th>
+                                                               <!--<th>Endereço</th>--> 
+                                                               <!--<th>Estado</th>-->
+                                                               <!--<th>Cidade</th>-->
+                                                               <!--<th>Bairro</th>-->
                                                                 <th>Telefone</th>
                                                                 <th>Celular</th>
                                                                 <th>Email</th>
-
+                                                                <th class="serial"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+
                                                         <% if (data) { %>
                                                             <% data.forEach(function(customer){ %>
                                                             <tr>
@@ -60,18 +61,20 @@
                                                                 <td>
                                                                     <%= customer.customer_cep %>
                                                                 </td>
-                                                                <td>
-                                                                    <%= customer.customer_cep %>
-                                                                </td>
+                                                                <!--
                                                                 <td>
                                                                     <%= customer.customer_placement %>
-                                                                </td> 
+                                                                </td>
                                                                 <td>
                                                                     <%= customer.customer_state %>
-                                                                </td>
+                                                                </td> 
                                                                 <td>
                                                                     <%= customer.customer_city %>
                                                                 </td>
+                                                                <td>
+                                                                    <%= customer.customer_neighborhood %>
+                                                                </td>
+                                                                -->
                                                                 <td>
                                                                     <%= customer.customer_telephone %>
                                                                 </td>
@@ -80,6 +83,12 @@
                                                                 </td>
                                                                 <td>
                                                                     <%= customer.customer_mail %>
+                                                                </td>
+                                                                <td align="right">
+                                                                    <form action="/customer/edit/<%= customer.id %>">
+                                                                        <button type="submit" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit"></i>&nbsp;Editar</button>
+                                                                    </form>                                                          
+                                                                    <!--<button type="button" class="btn btn-outline-danger btn-sm"><i class="fa ti-face-sad "></i>&nbsp; Excluir</button>-->
                                                                 </td>
                                                             </tr>
                                                             <% }) %>
@@ -117,6 +126,8 @@
     <script src="../js/lib/data-table/buttons.html5.min.js"></script>
     <script src="../js/lib/data-table/buttons.print.min.js"></script>
     <script src="../js/lib/data-table/buttons.colVis.min.js"></script>
+
+    <!--JS FOR INIT DATATABLES-->
     <script src="../js/init/datatables-init.js"></script>
 
 <%- include ../layouts/footer.ejs %>

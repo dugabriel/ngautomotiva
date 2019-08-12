@@ -8,9 +8,9 @@
 		}
 	} );
 	
-	$('#listCustomers tbody').on('click', 'tr', function () {
+	/*$('#listCustomers tbody').on('click', 'tr', function () {
         var data = listCustomers.row( this ).data();
         alert( 'You clicked on '+data[0]+'\'s row' );
-    } );
+    } );*/
 
 })(jQuery);

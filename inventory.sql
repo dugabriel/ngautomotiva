@@ -1,6 +1,6 @@
 -- USERS
 CREATE TABLE IF NOT EXISTS users (
-    id INT auto_increment,
+    id BIGINT auto_increment,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     login VARCHAR(150) NOT NULL,
@@ -16,12 +16,12 @@ VALUES('Eduardo', 'Gabriel', 'adm', 'adm');
 
 -- CUSTOMER
 CREATE TABLE IF NOT EXISTS customer (
-    id INT auto_increment,
-    customer_registry INT NOT NULL,
+    id BIGINT auto_increment,
+    customer_registry BIGINT NOT NULL,
     customer_name VARCHAR(255) NOT NULL,
-    customer_cep INT NOT NULL,
+    customer_cep BIGINT NOT NULL,
     customer_placement VARCHAR(150) NOT NULL,
-    customer_state VARCHAR(10) NOT NULL,
+    customer_state VARCHAR(50) NOT NULL,
     customer_city VARCHAR(100) NOT NULL,
     customer_neighborhood VARCHAR(100) NOT NULL,
     customer_telephone VARCHAR(100) NOT NULL,

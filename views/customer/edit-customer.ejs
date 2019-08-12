@@ -1,0 +1,158 @@
+<%- include ../layouts/header.ejs %>
+
+<body>
+    <%- include ../layouts/left-panel.ejs %>
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <%- include ../layouts/header-panel.ejs %>
+        <!-- Content -->
+        <div class="content">
+            <!-- Animated -->
+            <div class="animated fadeIn">
+                <!--  add  -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Editando Cliente</strong>
+                            </div>
+                            <div class="card-body">
+                                <!-- edit customer-->
+                                <div id="add-customer">
+                                    <div class="card-body">
+
+                                        <!--  MSG ERRORS -->
+                                        <% if (messages.error) { %>
+                                            <p style="color:red"><%- messages.error %></p>
+                                        <% } %>
+                                        
+                                        <% if (messages.success) { %>
+                                            <p style="color:green"><%- messages.success %></p>
+                                        <% } %>
+                                        <form action="/customer/edit/<%= id %>" method="post" novalidate="novalidate">
+                                            <div class="row">    
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="customer_registry" class="control-label mb-1">CPF/CNPJ</label>
+                                                        <input type="text" id="customer_registry" name="customer_registry" class="form-control" value="<%= customer_registry %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="customer_name" class="control-label mb-1">Nome Completo</label>
+                                                        <input type="text" id="customer_name" name="customer_name" class="form-control" value="<%= customer_name %>"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">    
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="customer_cep" class="control-label mb-1">CEP</label>
+                                                        <input type="text" id="customer_cep" name="customer_cep" class="form-control" value="<%= customer_cep %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                    </div>
+                                                </div>  
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="customer_placement" class="control-label mb-1">Endereço</label>
+                                                        <input type="text" id="customer_placement" name="customer_placement" class="form-control" value="<%= customer_placement %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="customer_state" class="control-label mb-1">Estado</label>
+                                                        <select id="customer_state" name="customer_state" class="form-control">
+                                                                <option value="SC">Santa Catarina</option>
+                                                                <option value="AC">Acre</option>
+                                                                <option value="AL">Alagoas</option>
+                                                                <option value="AP">Amapá</option>
+                                                                <option value="AM">Amazonas</option>
+                                                                <option value="BA">Bahia</option>
+                                                                <option value="CE">Ceará</option>
+                                                                <option value="DF">Distrito Federal</option>
+                                                                <option value="ES">Espírito Santo</option>
+                                                                <option value="GO">Goiás</option>
+                                                                <option value="MA">Maranhão</option>
+                                                                <option value="MT">Mato Grosso</option>
+                                                                <option value="MS">Mato Grosso do Sul</option>
+                                                                <option value="MG">Minas Gerais</option>
+                                                                <option value="PA">Pará</option>
+                                                                <option value="PB">Paraíba</option>
+                                                                <option value="PR">Paraná</option>
+                                                                <option value="PE">Pernambuco</option>
+                                                                <option value="PI">Piauí</option>
+                                                                <option value="RJ">Rio de Janeiro</option>
+                                                                <option value="RN">Rio Grande do Norte</option>
+                                                                <option value="RS">Rio Grande do Sul</option>
+                                                                <option value="RO">Rondônia</option>
+                                                                <option value="RR">Roraima</option>
+                                                                <option value="SP">São Paulo</option>
+                                                                <option value="SE">Sergipe</option>
+                                                                <option value="TO">Tocantins</option>
+                                                                <option value="EX">Estrangeiro</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="customer_city" class="control-label mb-1">Cidade</label>
+                                                        <input type="text" id="customer_city" name="customer_city" class="form-control" value="<%= customer_city %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="customer_neighborhood" class="control-label mb-1">Bairro</label>
+                                                        <input type="text" id="customer_neighborhood" name="customer_neighborhood" class="form-control" value="<%= customer_neighborhood %>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">    
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="customer_telephone" class="control-label mb-1">Telefone</label>
+                                                        <input type="text" id="customer_telephone" name="customer_telephone" class="form-control" value="<%= customer_telephone %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="customer_cellphone" class="control-label mb-1">Celular</label>
+                                                        <input type="text" id="customer_cellphone" name="customer_cellphone" class="form-control" value="<%= customer_cellphone %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">    
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="customer_mail" class="control-label mb-1">Email</label>
+                                                        <div class="input-group">
+                                                            <input type="email" id="customer_mail" name="customer_mail" placeholder="Email" class="form-control" value="<%= customer_mail %>">
+                                                            <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end">
+                                                <div class="col-3">
+                                                    <button type="submit" class="btn btn-success btn-lg btn-block">Editar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                              
+                                </div>
+                            </div>
+                        </div> <!-- .card -->
+                    </div>
+                </div>
+                <!--  /add -->
+                <div class="clearfix"></div>
+            <!-- .animated -->
+        </div>
+        <!-- /.content -->
+        <div class="clearfix"></div>
+        <!-- Footer Copyright -->
+        <%- include ../layouts/footer-copyright.ejs %>
+        <!-- /.site-footer -->
+    </div>
+    <!-- /#right-panel -->
+
+<%- include ../layouts/footer.ejs %>
