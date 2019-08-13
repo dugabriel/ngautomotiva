@@ -1,11 +1,12 @@
 const loginPage = '/auth'
+const title = 'NG Automotiva'
 
 exports.authenticationMiddleware = function(req, res){
     if (req.session.authenticated) {
         return true;
     } else {
         req.flash('error', 'efetue o login na plataforma')
-        res.render('login',{title: 'NODE CRUD'})
+        res.render('login',{title: title})
     }
 }
 

@@ -204,12 +204,13 @@ app.post('/edit/(:id)', function(req, res, next) {
 })
 
 //SEARCH USER FROM NAME
-app.get('/search/(:name)', function(req, res, next){
+app.get('/search/(:search)', function(req, res, next){
     if (auth.authenticationMiddleware(req,res)) {
+        
         req.getConnection(function(error, conn) {
             conn.query(
                 'select id,customer_name from customer where customer_name like ?',
-                ['%'+req.params.name+'%'],
+                ['%'+req.params.search+'%'],
                 (err, results) => {
                 if (err) {
                     res.send(err)

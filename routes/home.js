@@ -5,7 +5,7 @@ const auth = require('../controller/session')
 app.get('/',function(req, res) {
     if (auth.authenticationMiddleware(req,res)) { 
         console.log('build home')
-        res.render('home/home', {title: 'NODE CRUD'})
+        res.render('home/home', {title: 'NG Automotiva'})
     } 
 })
 

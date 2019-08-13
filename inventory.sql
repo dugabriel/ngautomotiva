@@ -14,7 +14,7 @@ INSERT INTO nodejs.users
 VALUES('Eduardo', 'Gabriel', 'adm', 'adm');
 
 
--- CUSTOMER
+-- customer
 CREATE TABLE IF NOT EXISTS customer (
     id BIGINT auto_increment,
     customer_registry BIGINT NOT NULL,
@@ -29,6 +29,26 @@ CREATE TABLE IF NOT EXISTS customer (
     customer_mail VARCHAR(100) NOT NULL,
     PRIMARY KEY (id)
 )  ENGINE=INNODB;
+
+CREATE INDEX user_search
+ON customer (customer_name);
+
+
+-- vehicle
+CREATE TABLE IF NOT EXISTS vehicle (
+    id BIGINT auto_increment,
+    license_plate VARCHAR(50) NOT NULL,
+    model VARCHAR(120) NOT NULL,
+    mileage BIGINT NOT NULL,
+    yearModel BIGINT NOT NULL,
+    engine VARCHAR(30) NOT NULL,
+    fuel VARCHAR(50) NOT NULL,
+    color VARCHAR(60) NOT NULL,
+    idCustomer BIGINT NOT null,
+    PRIMARY KEY (id)
+)  ENGINE=INNODB;
+
+
 
 -- ITENS
 CREATE TABLE IF NOT EXISTS items (
