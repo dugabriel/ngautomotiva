@@ -194,6 +194,25 @@ app.post('/edit/(:id)', function(req, res, next) {
     }
 })
 
+//SEARCH VEHICLE FROM PLATE
+app.get('/search/(:search)', function(req, res, next){
+    if (auth.authenticationMiddleware(req,res)) {
+        
+        req.getConnection(function(error, conn) {
+            conn.query(
+                'select id,license_plate from vehicle where license_plate like ?',
+                ['%'+req.params.search+'%'],
+                (err, results) => {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send(JSON.stringify(results))
+                }
+            })
+        })       
+    }
+})
+
 
 function renderPage(req,res,blank) {
     if (blank) req.body = '';

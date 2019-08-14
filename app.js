@@ -112,6 +112,7 @@ const index = require('./routes/index')
 const users = require('./routes/users')
 const vehicles = require('./routes/vehicles')
 const customer = require('./routes/customer')
+const budget = require('./routes/budget')
 
 /**
  * DEFINED ROUTES
@@ -122,6 +123,7 @@ app.use('/index', index)
 app.use('/items', users)
 app.use('/vehicles', vehicles)
 app.use('/customer', customer)
+app.use('/budget', budget)
 
 app.listen(3000, function(){
 	console.log('Server running at port 3000: http://127.0.0.1:3000')
