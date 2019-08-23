@@ -58,6 +58,9 @@ jQuery(document).ready(function($) {
                 type: "GET",
                 success: function(data){
                     console.log(data)
+                    if (data) {
+                        populateBudget(JSON.parse(data)[0]);
+                    }
                 },
                 error: function(error){
                     console.log(error)
@@ -66,6 +69,15 @@ jQuery(document).ready(function($) {
         }
     });
 
-
 });
 
+function populateBudget(data) {
+    if (data) {
+        $("#model").val(data.model)
+        $("#yearModel").val(data.yearModel)
+        $("#mileage").val(data.mileage)
+        $("#customer_registry").val(data.customer_registry)
+        $("#customer_name").val(data.customer_name)
+        $("#customer_mail").val(data.customer_mail)
+    }
+}

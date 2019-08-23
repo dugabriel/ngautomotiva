@@ -46,7 +46,7 @@
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label for="yearModel" class="control-label mb-1">Ano</label>
-                                                        <input type="text" id="yearModel" name="yearModel" class="form-control" value=""/>
+                                                        <input type="text" id="yearModel" name="yearModel" class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
@@ -78,12 +78,65 @@
                                                         </div>
                                                     </div>
                                                 </div>        
-                                            </div>  
+                                            </div>
+                                            <br><br>
+                                            <div class="row justify-content-end">
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <button type="button" id="addItem" name="addItem" class="btn btn-outline-primary btn-lg btn-block">Adicionar item</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="row">
+                                                <div class="col-12">
+                                                    <table class="table ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ITEM</th>
+                                                                <th>QTD</th>
+                                                                <th>VALOR</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <!--ROWS-->
+                                                            <template id="itemrow">
+                                                                <tr>
+                                                                    <td width="70%">
+                                                                        <div class="form-group">
+                                                                            <input type="text" id="item" name="item" class="form-control" value=""/>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td width="9%">
+                                                                        <div class="form-group">
+                                                                            <input type="text" id="qtd" name="qtd" class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                                                        </div>
+                                                                    </td>     
+                                                                    <td width="20%">
+                                                                        <div class="form-group">
+                                                                            <input type="text" id="price" name="price" class="form-control money" value=""/>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td width="1%">
+                                                                        <a href="#" class="fa fa-times remove"></a>
+                                                                    </td>   
+                                                                </tr>
+                                                            </template>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <br><br>
+                                            <div class="row row justify-content-end">
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="total" class="control-label mb-1">Total</label>
+                                                        <input type="text" id="total" name="total" readonly class="form-control money" value=""/>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
-                              
                                 </div>
                             </div>
                         </div> <!-- .card -->
@@ -104,6 +157,9 @@
     <!--JS FOR INIT SELECT2-->
     <script src="/js/jquery.min.js"></script>
     <script src="/js/init/select2-init.js"></script>
+    <script src="/js/init/budget.js"></script>
     <script src="/js/lib/select2.min.js"></script>
+    <script src="/js/lib/jquery.maskMoney.min.js"></script>
+    <script src="/js/lib/numeral.min.js"></script>
 
 <%- include ../layouts/footer.ejs %>
