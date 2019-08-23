@@ -44,12 +44,26 @@ jQuery(document).ready(function($) {
                 };
             }
         },
-        placeholder: 'Buscar clientes...',
+        placeholder: 'Buscar Placas...',
         minimumInputLength: 3
     });
 
     $('#license_plate').on('select2:select', function (data) {
-        console.log(data.params.data)
+
+        let vehicleID = data.params.data.id;
+
+        if (vehicleID > 0) {
+            $.ajax({
+                url: "/vehicles/search/customerbyplate/"+vehicleID,
+                type: "GET",
+                success: function(data){
+                    console.log(data)
+                },
+                error: function(error){
+                    console.log(error)
+                }
+            });
+        }
     });
 
 

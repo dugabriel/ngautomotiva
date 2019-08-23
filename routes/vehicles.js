@@ -213,6 +213,23 @@ app.get('/search/(:search)', function(req, res, next){
     }
 })
 
+app.get('/search/customerbyplate/(:id)', function(req, res, next){
+    if (auth.authenticationMiddleware(req,res)) {
+        
+        req.getConnection(function(error, conn) {
+            conn.query(
+                'select * from vehicle v inner join customer c on (v.idCustomer = c.id) where v.id = ?',
+                [req.params.id],
+                (err, results) => {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send(JSON.stringify(results))
+                }
+            })
+        })       
+    }
+})
 
 function renderPage(req,res,blank) {
     if (blank) req.body = '';

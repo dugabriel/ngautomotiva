@@ -37,10 +37,47 @@
                                                         <select id="license_plate" name="license_plate" class="form-control"></select>
                                                     </div>
                                                 </div>
+                                                <div class="col-5">
+                                                    <div class="form-group">
+                                                        <label for="model" class="control-label mb-1">Marca/Modelo</label>
+                                                        <input type="text" id="model" name="model" class="form-control" value=""/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="yearModel" class="control-label mb-1">Ano</label>
+                                                        <input type="text" id="yearModel" name="yearModel" class="form-control" value=""/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="mileage" class="control-label mb-1">KM</label>
+                                                        <input type="text" id="mileage" name="mileage" class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                                    </div>
+                                                </div>
                                             </div> 
                                             <div class="row">
-                                               
-                                              
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="customer_registry" class="control-label mb-1">CPF/CNPJ</label>
+                                                        <input type="text" id="customer_registry" name="customer_registry" class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="form-group">
+                                                        <label for="customer_name" class="control-label mb-1">Nome Completo</label>
+                                                        <input type="text" id="customer_name" name="customer_name" class="form-control" value=""/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="customer_mail" class="control-label mb-1">Email</label>
+                                                        <div class="input-group">
+                                                            <input type="email" id="customer_mail" name="customer_mail" placeholder="Email" class="form-control" value="">
+                                                            <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+                                                        </div>
+                                                    </div>
+                                                </div>        
                                             </div>  
                                             <div class="row">
                                             </div>
