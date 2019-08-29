@@ -25,7 +25,7 @@ jQuery(document).ready(function($) {
         minimumInputLength: 3
     });
 
-    $("#license_plate").select2({
+    $("#license_plate_id").select2({
         ajax: {
             url: function (params) {
                 return '/vehicles/search/' + params.term;
@@ -48,7 +48,7 @@ jQuery(document).ready(function($) {
         minimumInputLength: 3
     });
 
-    $('#license_plate').on('select2:select', function (data) {
+    $('#license_plate_id').on('select2:select', function (data) {
 
         let vehicleID = data.params.data.id;
 
@@ -79,5 +79,6 @@ function populateBudget(data) {
         $("#customer_registry").val(data.customer_registry)
         $("#customer_name").val(data.customer_name)
         $("#customer_mail").val(data.customer_mail)
+        $("#license_plate").val(data.license_plate)
     }
 }

@@ -5,29 +5,30 @@ const newBudgetTilte = 'Novo orçamento'
 const listBudgetTitle = 'Listar orçamentos'
 const editBudgetTitle = 'Alterando orçamento'
 
-// SHOW ADD ITEMS CUSTOMER
+// SHOW ADD BUDGET
 app.get('/add', function(req, res, next){	
     if (auth.authenticationMiddleware(req,res)) { 
         renderPage(req,res,true)
     }
 })
 
-// ADD NEW CUSTOMER
+// ADD NEW BUDGET
 // req assert exprees validator
 app.post('/add', function(req, res, next){	
     if (auth.authenticationMiddleware(req,res)) {
 
-        console.log('post add customer')
-        req.assert('customer_registry', 'CPF/CNPJ é obrigatório').notEmpty()
-        req.assert('customer_registry', 'CPF/CNPJ deve conter no mínimo 11 dígitos').len(11, 30);
+        console.log('post add budget')
+
+        console.log(req.body.bodyBudgetTable)
+        req.assert('license_plate_id', 'A placa é obrigatória').notEmpty()
+        req.assert('model', 'Modelo do veículo é obrigatório').notEmpty()
+        req.assert('yearModel', 'Ano do veículo é obrigatório').notEmpty()
+        req.assert('customer_registry', 'CPF/CNPF do cliente é obrigatório').notEmpty()
         req.assert('customer_name', 'Nome do cliente é obrigatório').notEmpty()
-        req.assert('customer_cep', 'CEP é obrigatório').notEmpty()
-        req.assert('customer_cep', 'CEP deve conter no máximo 8 dígitos').len(0, 10);
-        req.assert('customer_placement', 'Endereço é obrigatório').notEmpty()
-        req.assert('customer_state', 'Estado é obrigatório').notEmpty()
-        req.assert('customer_city', 'Cidade é obrigatório').notEmpty()
-        //req.assert('customer_neighborhood', 'Bairro é obrigatório').notEmpty()
-        req.assert('customer_cellphone', 'Celular é obrigatório').notEmpty()
+        
+
+        req.assert('license', 'A testee é obrigatória').notEmpty()
+
         
         var errors = req.validationErrors()
         
@@ -206,7 +207,15 @@ app.post('/edit/(:id)', function(req, res, next) {
 function renderPage(req,res,blank) {
     if (blank) req.body = '';
     res.render('budget/add-budget', { 
-        title: newBudgetTilte
+        title: newBudgetTilte,
+        license_plate_id: req.body.license_plate_id,
+        license_plate: req.body.license_plate,
+        model: req.body.model,
+        mileage: req.body.mileage,
+        yearModel: req.body.yearModel,
+        customer_registry: req.body.customer_registry,
+        customer_name: req.body.customer_name,
+        customer_mail: req.body.customer_mail
     })
 }
 

@@ -29,30 +29,33 @@
                                         <% if (messages.success) { %>
                                             <p style="color:green"><%- messages.success %></p>
                                         <% } %>
-                                        <form action="/budget/add" method="post" novalidate="novalidate">
+                                        <form action="/budget/add" method="post" novalidate="novalidate" id="formBudget">
                                             <div class="row">    
                                                 <div class="col-3">
                                                     <div class="form-group">
-                                                        <label for="license_plate" class="control-label mb-1">Placa</label>
-                                                        <select id="license_plate" name="license_plate" class="form-control"></select>
+                                                        <label for="license_plate_id" class="control-label mb-1">Placa</label>
+                                                        <select id="license_plate_id" name="license_plate_id" class="form-control">
+                                                            <option value="<%- license_plate_id %>"><%- license_plate %></option>
+                                                        </select>
+                                                        <input type="hidden" name="license_plate" id="license_plate" value="<%- license_plate %>"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-5">
                                                     <div class="form-group">
                                                         <label for="model" class="control-label mb-1">Marca/Modelo</label>
-                                                        <input type="text" id="model" name="model" class="form-control" value=""/>
+                                                        <input type="text" id="model" name="model" class="form-control" value="<%- model %>"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label for="yearModel" class="control-label mb-1">Ano</label>
-                                                        <input type="text" id="yearModel" name="yearModel" class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                                        <input type="text" id="yearModel" name="yearModel" class="form-control" value="<%- yearModel %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label for="mileage" class="control-label mb-1">KM</label>
-                                                        <input type="text" id="mileage" name="mileage" class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                                        <input type="text" id="mileage" name="mileage" class="form-control" value="<%- mileage %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                                     </div>
                                                 </div>
                                             </div> 
@@ -60,20 +63,20 @@
                                                 <div class="col-3">
                                                     <div class="form-group">
                                                         <label for="customer_registry" class="control-label mb-1">CPF/CNPJ</label>
-                                                        <input type="text" id="customer_registry" name="customer_registry" class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                                        <input type="text" id="customer_registry" name="customer_registry" class="form-control" value="<%- customer_registry %>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-5">
                                                     <div class="form-group">
                                                         <label for="customer_name" class="control-label mb-1">Nome Completo</label>
-                                                        <input type="text" id="customer_name" name="customer_name" class="form-control" value=""/>
+                                                        <input type="text" id="customer_name" name="customer_name" class="form-control" value="<%- customer_name %>"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="customer_mail" class="control-label mb-1">Email</label>
                                                         <div class="input-group">
-                                                            <input type="email" id="customer_mail" name="customer_mail" placeholder="Email" class="form-control" value="">
+                                                            <input type="email" id="customer_mail" name="customer_mail" placeholder="Email" class="form-control" value="<%- customer_mail %>">
                                                             <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
                                                         </div>
                                                     </div>
@@ -89,7 +92,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <table class="table ">
+                                                    <table class="table" id="tableBudget">
                                                         <thead>
                                                             <tr>
                                                                 <th>ITEM</th>
@@ -98,32 +101,34 @@
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
+                                                        <tbody id="bodyBudgetTable">
                                                             <!--ROWS-->
-                                                            <template id="itemrow">
-                                                                <tr>
-                                                                    <td width="70%">
-                                                                        <div class="form-group">
-                                                                            <input type="text" id="item" name="item" class="form-control" value=""/>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td width="9%">
-                                                                        <div class="form-group">
-                                                                            <input type="text" id="qtd" name="qtd" class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
-                                                                        </div>
-                                                                    </td>     
-                                                                    <td width="20%">
-                                                                        <div class="form-group">
-                                                                            <input type="text" id="price" name="price" class="form-control money" value=""/>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td width="1%">
-                                                                        <a href="#" class="fa fa-times remove"></a>
-                                                                    </td>   
-                                                                </tr>
-                                                            </template>
+                                                           
                                                         </tbody>
+                                                        <template id="itemrow">
+                                                            <tr>
+                                                                <td width="70%">
+                                                                    <div class="form-group">
+                                                                        <input type="text" id="item" name="item" class="form-control" value=""/>
+                                                                    </div>
+                                                                </td>
+                                                                <td width="9%">
+                                                                    <div class="form-group">
+                                                                        <input type="text" id="qtd" name="qtd" class="form-control" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                                                    </div>
+                                                                </td>     
+                                                                <td width="20%">
+                                                                    <div class="form-group">
+                                                                        <input type="text" id="price" name="price" class="form-control money" value=""/>
+                                                                    </div>
+                                                                </td>
+                                                                <td width="1%">
+                                                                    <a href="#" class="fa fa-times remove"></a>
+                                                                </td>   
+                                                            </tr>
+                                                        </template>
                                                     </table>
+                                                    <input type="text" name="serializeTable" id="serializeTable"/>
                                                 </div>
                                             </div>
                                             <br><br>
@@ -131,8 +136,14 @@
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label for="total" class="control-label mb-1">Total</label>
-                                                        <input type="text" id="total" name="total" readonly class="form-control money" value=""/>
+                                                        <input type="text" id="total" name="total" readonly class="form-control" value=""/>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <br><br><br>
+                                            <div class="row justify-content-end">
+                                                <div class="col-2">
+                                                    <button type="submit" class="btn btn-success btn-lg btn-block">Salvar</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -160,6 +171,6 @@
     <script src="/js/init/budget.js"></script>
     <script src="/js/lib/select2.min.js"></script>
     <script src="/js/lib/jquery.maskMoney.min.js"></script>
-    <script src="/js/lib/numeral.min.js"></script>
+    <script src="/js/lib/currency.min.js"></script>
 
 <%- include ../layouts/footer.ejs %>
