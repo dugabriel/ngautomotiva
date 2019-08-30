@@ -48,13 +48,19 @@ CREATE TABLE IF NOT EXISTS vehicle (
     PRIMARY KEY (id)
 )  ENGINE=INNODB;
 
-
-
--- ITENS
-CREATE TABLE IF NOT EXISTS items (
-    id INT AUTO_INCREMENT,
-    name VARCHAR(255),
-    qty int,
-    amount VARCHAR(255),
+CREATE TABLE IF NOT EXISTS budget (
+    id BIGINT auto_increment,
+    date_budget VARCHAR(50) NOT NULL,
+    license_plate VARCHAR(50) NOT NULL,
+    license_plate_id BIGINT NOT NULL,
+    model VARCHAR(120) NOT NULL,
+    yearModel BIGINT,
+    mileage BIGINT,
+	customer_registry VARCHAR(60) NOT NULL,
+	customer_name VARCHAR(255) NOT NULL,
+	customer_mail VARCHAR(100),
+    total VARCHAR(300) NOT NULL,
+    tableData longtext,
     PRIMARY KEY (id)
 )  ENGINE=INNODB;
+

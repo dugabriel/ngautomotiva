@@ -14,7 +14,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Novo Orçamento</strong>
+                                <strong class="card-title">Editando Orçamento</strong>
                             </div>
                             <div class="card-body">
                                 <!-- new vehicle-->
@@ -29,7 +29,7 @@
                                         <% if (messages.success) { %>
                                             <p style="color:green"><%- messages.success %></p>
                                         <% } %>
-                                        <form action="/budget/add" method="post" novalidate="novalidate" id="formBudget">
+                                        <form action="/budget/edit/<%= id %>" method="post" novalidate="novalidate" id="formBudget">
                                             <div class="row"> 
                                                 <div class="col-3">
                                                     <div class="form-group">

@@ -7,79 +7,62 @@ const editBudgetTitle = 'Alterando orçamento'
 
 // SHOW ADD BUDGET
 app.get('/add', function(req, res, next){	
-    if (auth.authenticationMiddleware(req,res)) { 
+    if (auth.authenticationMiddleware(req,res)) {
         renderPage(req,res,true)
     }
 })
 
 // ADD NEW BUDGET
-// req assert exprees validator
 app.post('/add', function(req, res, next){	
     if (auth.authenticationMiddleware(req,res)) {
 
         console.log('post add budget')
 
-        console.log(req.body.bodyBudgetTable)
+        req.assert('date_budget', 'A data é obrigatória').notEmpty()
         req.assert('license_plate_id', 'A placa é obrigatória').notEmpty()
         req.assert('model', 'Modelo do veículo é obrigatório').notEmpty()
         req.assert('yearModel', 'Ano do veículo é obrigatório').notEmpty()
         req.assert('customer_registry', 'CPF/CNPF do cliente é obrigatório').notEmpty()
         req.assert('customer_name', 'Nome do cliente é obrigatório').notEmpty()
-        
+        req.assert('total', 'O orçamento deve conter um preço').notEmpty()
 
-        req.assert('license', 'A testee é obrigatória').notEmpty()
+      
+        req.body.table = parseTable(req)
 
-        
         var errors = req.validationErrors()
         
         if (!errors) {   //No errors were found.  Passed Validation!
-            
-            req.getConnection(function(error, conn) { 
-                conn.query(
-                    'select customer_registry from customer where customer_registry = ?',
-                    [req.body.customer_registry],
-                    (err, results) => {
+     
+            // INSERT NEW BUDGET
+            var budget = {
+                date_budget: req.body.date_budget,
+                license_plate: req.sanitize('license_plate').escape().trim(),
+                license_plate_id: req.sanitize('license_plate_id').escape().trim(),
+                model: req.sanitize('model').escape().trim(),
+                yearModel: req.sanitize('yearModel').escape().trim(),
+                mileage: req.sanitize('mileage').escape().trim(),
+                customer_registry: req.sanitize('customer_registry').escape().trim(),
+                customer_name: req.sanitize('customer_name').escape().trim(),
+                customer_mail: req.sanitize('customer_mail').escape().trim(),
+                total: req.sanitize('total').escape().trim(),
+                tableData: req.body.table
+            }
+
+            req.getConnection(function(error, conn) {
+                conn.query('INSERT INTO budget SET ?', budget, function(err, result) {
+                    //if(err) throw err
                     if (err) {
                         req.flash('error', err)
+                        
                         renderPage(req,res,false)
-                    } else {
-                        if (results[0] != undefined) {
-                            console.log('Cliente já cadastrado..')
-                            req.flash('error', 'Usuário já cadastrado')
-                            renderPage(req,res,false)
-                        } else {
-                            // INSERT NEW USER
-                            var customer = {
-                                customer_registry: req.sanitize('customer_registry').escape().trim(),
-                                customer_name: req.sanitize('customer_name').escape().trim(),
-                                customer_cep: req.sanitize('customer_cep').escape().trim(),
-                                customer_placement: req.sanitize('customer_placement').escape().trim(),
-                                customer_state: req.sanitize('customer_state').escape().trim(),
-                                customer_city: req.sanitize('customer_city').escape().trim(),
-                                customer_neighborhood: req.sanitize('customer_neighborhood').escape().trim(),
-                                customer_telephone: req.sanitize('customer_telephone').escape().trim(),
-                                customer_cellphone: req.sanitize('customer_cellphone').escape().trim(),
-                                customer_mail: req.sanitize('customer_mail').escape().trim()
-                            }
-                            req.getConnection(function(error, conn) {
-                                conn.query('INSERT INTO customer SET ?', customer, function(err, result) {
-                                    //if(err) throw err
-                                    if (err) {
-                                        req.flash('error', err)
-                                        
-                                        renderPage(req,res,false)
-                                    } else {				
-                                        req.flash('success', req.body.customer_name+' cadastrado com sucesso!')
-                                        
-                                        renderPage(req,res,true)
-                                    }
-                                })
-                            })
-
-                        }
+                    } else {				
+                        req.flash('success', 'cadastrado com sucesso!')
+                        
+                        renderPage(req,res,true)
                     }
                 })
-            }) 
+            })
+
         } else {  
             var error_msg = ''
             errors.forEach(function(error) {
@@ -96,15 +79,15 @@ app.post('/add', function(req, res, next){
 app.get('/list', function(req, res, next) {
     if (auth.authenticationMiddleware(req,res)) {
         req.getConnection(function(error, conn) {
-            conn.query('SELECT * FROM customer ORDER BY customer_name ASC',function(err, rows, fields) {
+            conn.query('SELECT * FROM budget ORDER BY customer_name ASC',function(err, rows, fields) {
                 if (err) {
                     req.flash('error', err)
-                    res.render('customer/list-customer', {
+                    res.render('budget/list-budget', {
                         title: listBudgetTitle, 
                         data: ''
                     })
                 } else {
-                    res.render('customer/list-customer', {
+                    res.render('budget/list-budget', {
                         title: listBudgetTitle, 
                         data: rows
                     })
@@ -118,28 +101,29 @@ app.get('/list', function(req, res, next) {
 app.get('/edit/(:id)', function(req, res, next){
     if (auth.authenticationMiddleware(req,res)) {
         req.getConnection(function(error, conn) {
-            conn.query('SELECT * FROM customer WHERE id = ?', [req.params.id], function(err, rows, fields) {
+            conn.query('SELECT * FROM budget WHERE id = ?', [req.params.id], function(err, rows, fields) {
                 if(err) throw err
                 
                 // if items not found
                 if (rows.length <= 0) {
-                    req.flash('error', 'Cliente não encontrado com o id = ' + req.params.id)
-                    res.redirect('/customer/list')
+                    req.flash('error', 'Orçamento não encontrado com o id = ' + req.params.id)
+                    res.redirect('/budget/list')
                 }
                 else { // if customer found
-                    res.render('customer/edit-customer', {
+                    res.render('budget/edit-budget', {
                         title: editBudgetTitle,
                         id: rows[0].id,
+                        date_budget: rows[0].date_budget,
+                        license_plate_id: rows[0].license_plate_id,
+                        license_plate: rows[0].license_plate,
+                        model: rows[0].model,
+                        mileage: rows[0].mileage,
+                        yearModel: rows[0].yearModel,
                         customer_registry: rows[0].customer_registry,
                         customer_name: rows[0].customer_name,
-                        customer_cep: rows[0].customer_cep,
-                        customer_placement: rows[0].customer_placement,
-                        customer_state: rows[0].customer_state,
-                        customer_city: rows[0].customer_city,
-                        customer_neighborhood: rows[0].customer_neighborhood,
-                        customer_telephone: rows[0].customer_telephone,
-                        customer_cellphone: rows[0].customer_cellphone,
-                        customer_mail: rows[0].customer_mail				
+                        customer_mail: rows[0].customer_mail,
+                        total: rows[0].total,
+                        table: rows[0].tableData			
                     })
                 }			
             })
@@ -150,44 +134,47 @@ app.get('/edit/(:id)', function(req, res, next){
 app.post('/edit/(:id)', function(req, res, next) {
     if (auth.authenticationMiddleware(req,res)) {
 
-        console.log('post edit customer')
-        req.assert('customer_registry', 'CPF/CNPJ é obrigatório').notEmpty()
-        req.assert('customer_registry', 'CPF/CNPJ deve conter no mínimo 11 dígitos').len(11, 30);
+        console.log('post edit budget')
+
+        req.assert('date_budget', 'A data é obrigatória').notEmpty()
+        req.assert('license_plate_id', 'A placa é obrigatória').notEmpty()
+        req.assert('model', 'Modelo do veículo é obrigatório').notEmpty()
+        req.assert('yearModel', 'Ano do veículo é obrigatório').notEmpty()
+        req.assert('customer_registry', 'CPF/CNPF do cliente é obrigatório').notEmpty()
         req.assert('customer_name', 'Nome do cliente é obrigatório').notEmpty()
-        req.assert('customer_cep', 'CEP é obrigatório').notEmpty()
-        req.assert('customer_cep', 'CEP deve conter no máximo 8 dígitos').len(0, 10);
-        req.assert('customer_placement', 'Endereço é obrigatório').notEmpty()
-        req.assert('customer_state', 'Estado é obrigatório').notEmpty()
-        req.assert('customer_city', 'Cidade é obrigatório').notEmpty()
-        //req.assert('customer_neighborhood', 'Bairro é obrigatório').notEmpty()
-        req.assert('customer_cellphone', 'Celular é obrigatório').notEmpty()
+        req.assert('total', 'O orçamento deve conter um preço').notEmpty()
+
+      
+        req.body.table = parseTable(req)
 
         var errors = req.validationErrors()
         
         if( !errors ) {   //No errors were found.  Passed Validation!
             
-            var customer = {
+            // UPDATE BUDGET
+            var budget = {
+                date_budget: req.body.date_budget,
+                license_plate: req.sanitize('license_plate').escape().trim(),
+                license_plate_id: req.sanitize('license_plate_id').escape().trim(),
+                model: req.sanitize('model').escape().trim(),
+                yearModel: req.sanitize('yearModel').escape().trim(),
+                mileage: req.sanitize('mileage').escape().trim(),
                 customer_registry: req.sanitize('customer_registry').escape().trim(),
                 customer_name: req.sanitize('customer_name').escape().trim(),
-                customer_cep: req.sanitize('customer_cep').escape().trim(),
-                customer_placement: req.sanitize('customer_placement').escape().trim(),
-                customer_state: req.sanitize('customer_state').escape().trim(),
-                customer_city: req.sanitize('customer_city').escape().trim(),
-                customer_neighborhood: req.sanitize('customer_neighborhood').escape().trim(),
-                customer_telephone: req.sanitize('customer_telephone').escape().trim(),
-                customer_cellphone: req.sanitize('customer_cellphone').escape().trim(),
-                customer_mail: req.sanitize('customer_mail').escape().trim()
+                customer_mail: req.sanitize('customer_mail').escape().trim(),
+                total: req.sanitize('total').escape().trim(),
+                tableData: req.body.table
             }
             
             req.getConnection(function(error, conn) {
-                conn.query('UPDATE customer SET ? WHERE id = ' + req.params.id, customer, function(err, result) {
+                conn.query('UPDATE budget SET ? WHERE id = ' + req.params.id, budget, function(err, result) {
                     //if(err) throw err
                     if (err) {
                         req.flash('error', err)
                         renderEditPage(req,res,false)
                     } else {
                         req.flash('success', 'Editado com sucesso')
-                        res.redirect('/customer/list')
+                        res.redirect('/budget/list')
                     }
                 })
             })
@@ -208,6 +195,7 @@ function renderPage(req,res,blank) {
     if (blank) req.body = '';
     res.render('budget/add-budget', { 
         title: newBudgetTilte,
+        date_budget: req.body.date_budget,
         license_plate_id: req.body.license_plate_id,
         license_plate: req.body.license_plate,
         model: req.body.model,
@@ -215,7 +203,9 @@ function renderPage(req,res,blank) {
         yearModel: req.body.yearModel,
         customer_registry: req.body.customer_registry,
         customer_name: req.body.customer_name,
-        customer_mail: req.body.customer_mail
+        customer_mail: req.body.customer_mail,
+        total: req.body.total,
+        table: req.body.table
     })
 }
 
@@ -225,6 +215,32 @@ function renderEditPage(req,res,blank) {
         title: editBudgetTitle,
         id: req.params.id
     })
+}
+
+function parseTable(req) {
+    let items = [];
+
+    if (req.body.item) {
+        if (typeof req.body.item === 'string') {
+            items.push({
+                item: req.body.item,
+                price: req.body.price,
+                qtd: req.body.qtd
+            })
+        } else {
+            for(let i in req.body.item) {
+                items.push({
+                    item: req.body.item[i],
+                    price: req.body.price[i],
+                    qtd: req.body.qtd[i]
+                })
+            }
+        }
+    }
+
+    console.log(JSON.stringify(items))
+
+    return JSON.stringify(items)
 }
 
 

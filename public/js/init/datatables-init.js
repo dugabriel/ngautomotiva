@@ -8,12 +8,22 @@
 		}
 	} );
 
-	var listCustomers = $('#listVehicles').DataTable( {
+	var listVehicles = $('#listVehicles').DataTable( {
         "language": {
 			"url": "../js/lib/data-table/Portuguese-Brasil.json",
 			"lengthMenu": [[50, 100, -1], [50, 100, "All"]]
 		}
 	} );
+
+	var listBudgets = $('#listBudgets').DataTable( {
+        "language": {
+			"url": "../js/lib/data-table/Portuguese-Brasil.json",
+			"lengthMenu": [[50, 100, -1], [50, 100, "All"]]
+		}
+	} );
+
+	
+
 	
 	/*$('#listCustomers tbody').on('click', 'tr', function () {
         var data = listCustomers.row( this ).data();
